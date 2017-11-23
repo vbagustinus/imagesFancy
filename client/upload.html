@@ -39,11 +39,23 @@
                       <input class="input" type='text' v-model="name" placeholder="Name images"><br><br>
                       <div v-if="!image">
                         <h2>Select an image</h2>
-                        <input class="button" name="file" id="file" type="file" @change="onFileChange">
+                        <div class="file is-primary">
+                          <label class="file-label">
+                            <input class="file-input" name="file" id="file" type="file" @change="onFileChange">
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fa fa-upload"></i>
+                              </span>
+                              <span class="file-label">
+                                Primary file…
+                              </span>
+                            </span>
+                          </label>
+                        </div>
                       </div>
                       <div v-else>
-                        <img  :src="image" />
-                        <button class="button is-danger" @click="removeImage">Remove image</button>
+                        <img class="small":src="image" />
+                        <button class="button is-danger" @click="removeImage">Remove</button>
                       </div>
                       <input class="button is-warning" type="submit" value="Upload Image" name="submit"/>
                     </div>
@@ -67,7 +79,8 @@
           resultUpload: null,
           closeModal: null,
           name: '',
-          imageName: ''
+          imageName: '',
+          currentLocation : ''
         },
         methods: {
           onFileChange(e) {
@@ -94,6 +107,8 @@
             let data = new FormData();
             data.append('name', this.name);
             data.append('image', this.resultUpload);
+            data.append('latitude', this.currentLocation.latitude);
+            data.append('longitude', this.currentLocation.longitude);
             axios.post('http://localhost:3000/upload', data)
             .then((res)=> {
               console.log('HASIL KIRIM',res);
@@ -103,24 +118,11 @@
               console.log(err);
             });
           },
-          removeImage: function (e) {
+          removeImage(){
             this.image = '';
-          },
-          // saveImage(e){
-          //   console.log(this.dataImage);
-          //   let oo = e.target.files
-          //   let data = new FormData();
-          //   data.append('name', this.name);
-          //   data.append('file', this.image); //document.getElementById('file').files[0]
-          //   console.log('INI DATA', data);
-          //   axios.post('http://localhost:3000/upload', data,{headers: { 'Content-Type': 'multipart/form-data' } })
-          //   .then(response => {
-          //     console.log('HASIL',response);
-          //   })
-          //   .catch(err => {
-          //     console.log(err);
-          //   })
-          // }
+            this.name = '',
+            this.currentLocation = ''
+          }
         },
         created () {
           navigator.geolocation.getCurrentPosition((position) => {
@@ -128,9 +130,6 @@
               latitude: position.coords.latitude,
               longitude: position.coords.longitude
             };
-
-            console.log('POSISI TERAKHIR',typeof this.currentLocation.longitude);
-            console.log(this.currentLocation.latitude);
           });
         }
       })

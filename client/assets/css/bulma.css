@@ -186,7 +186,7 @@ hr {
 
 img {
   height: auto;
-  max-width: 100%;
+  max-width: 300px;
 }
 
 input[type="checkbox"],
@@ -196,6 +196,7 @@ input[type="radio"] {
 
 small {
   font-size: 0.875em;
+  width: 100px;
 }
 
 span {

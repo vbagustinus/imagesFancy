@@ -9,16 +9,18 @@ let getAllImages = (req, res) => {
 
 let createImage = (req, res, next) => {
   console.log(req.body.name);
+  console.log('LOKASI',req.body.longitude);
+  console.log('LOKASI',req.body.latitude);
   console.log('URL PENTING',req.file.cloudStoragePublicUrl);
-  let inputObj = {
-    name: req.body.name,
-    url: req.file.cloudStoragePublicUrl,
-    location: String,
-    createdAt: {
-      type: Date,
-      default: Date.now
-    }
-  }
+  // let inputObj = {
+  //   name: req.body.name,
+  //   url: req.file.cloudStoragePublicUrl,
+  //   location: String,
+  //   createdAt: {
+  //     type: Date,
+  //     default: Date.now
+  //   }
+  // }
 }
 
 
