@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+     <!-- <script src="https://unpkg.com/vue@2.5.8/dist/vue.js"></script> -->
+    <title>Simple icons</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+
+  </head>
+  <body>
+
+    <div id="root">
+       <google-map :center="center" :zoom="7" style="width: 100%; height: 700px">
+        <google-marker v-for="m in markers" :position="m.position"  :icon="m.icon" :clickable="true" :draggable="true" @click="center=m.position"></google-marker>
+       </google-map>
+     </div>
+     <div class="search">
+       <input type="text" v-model="searchAddressInput" v-on:change="searchLocation()"></input>
+     </div>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+   <script src="node_modules/vue2-google-maps/dist/vue-google-maps.js"></script>
+   <!-- <script async defer
+     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlgXFEsBMaSg4UFREFTytZ1HPuZW1P-8Y&callback=initMap">
+     </script> -->
+     <script src="./foo/geo.js" charset="utf-8"></script>
+   <script>
+     Vue.use(VueGoogleMaps, {
+       load: {
+         key: 'AIzaSyDlgXFEsBMaSg4UFREFTytZ1HPuZW1P-8Y',
+
+       },
+       // Demonstrating how we can customize the name of the components
+       installComponents: false,
+     });
+
+     document.addEventListener('DOMContentLoaded', function() {
+       Vue.component('google-map', VueGoogleMaps.Map);
+       Vue.component('google-marker', VueGoogleMaps.Marker);
+
+       new Vue({
+         el: '#root',
+         data: {
+           center: {
+             lat: 10.0,
+             lng: 10.0
+           },
+           markers: [{
+             position: {
+               lat: 10.0,
+               lng: 10.0
+             },
+             icon : 'https://vignette.wikia.nocookie.net/simpsons/images/0/01/200px-Langdon_Alger.png/revision/latest?cb=20120815160236'
+           }, {
+             position: {
+               lat: 11.0,
+               lng: 11.0
+             },
+             icon : 'https://jonathanturley.files.wordpress.com/2008/07/150px-mickey_mousesvg.png'
+           }]
+         }
+       });
+     });
+   </script>
+  </body>
+</html>
