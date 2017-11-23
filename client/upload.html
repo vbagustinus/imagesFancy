@@ -16,13 +16,13 @@
   <body>
 <div id="images">
   <div class="tile is-ancestor">
-    <div class="tile is-vertical is-8">
+    <div class="tile is-vertical is-7">
       <div class="tile is-parent">
-        <article class="tile is-child notification is-success">
-          <p class="title">Wide tile</p>
-          <p class="subtitle">Aligned with the right tile</p>
-          <div class="content">
-            <!-- Content -->
+        <article class="tile is-child notification is-dark">
+          <div class="content" v-for="img in images">
+            <img class="small" :src="img.url" />
+            <a class="button is-primary" :href="img.url" :download="img.url">Download</a>
+            <!-- {{ images }} -->
           </div>
         </article>
       </div>
@@ -36,10 +36,11 @@
                 <div class="field">
                   <div class="control">
                     <div class="field">
+                      <label class="label">Images Name</label>
                       <input class="input" type='text' v-model="name" placeholder="Name images"><br><br>
                       <div v-if="!image">
-                        <h2>Select an image</h2>
-                        <div class="file is-primary">
+                        <label class="label">Select an image</label>
+                        <div class="file is-dark">
                           <label class="file-label">
                             <input class="file-input" name="file" id="file" type="file" @change="onFileChange">
                             <span class="file-cta">
@@ -47,17 +48,18 @@
                                 <i class="fa fa-upload"></i>
                               </span>
                               <span class="file-label">
-                                Primary file…
+                                Choose file…
                               </span>
                             </span>
                           </label>
                         </div>
+                        <br/>
                       </div>
                       <div v-else>
                         <img class="small":src="image" />
-                        <button class="button is-danger" @click="removeImage">Remove</button>
                       </div>
-                      <input class="button is-warning" type="submit" value="Upload Image" name="submit"/>
+                      <input class="button is-dark" type="submit" value="Save" name="submit"/>
+                      <button class="button is-danger" @click="removeImage">Reset</button>
                     </div>
                   </div>
                 </div>
@@ -70,69 +72,7 @@
     </div>
 </div>
 </div>
-    <script>
-      new Vue(
-      {
-        el: '#images',
-        data: {
-          image: '',
-          resultUpload: null,
-          closeModal: null,
-          name: '',
-          imageName: '',
-          currentLocation : ''
-        },
-        methods: {
-          onFileChange(e) {
-            // alert(JSON.stringify(e))
-          console.log(e.target.files)
-          var files = e.target.files || e.dataTransfer.files;
 
-          if (!files.length) {
-            return;
-          }
-          this.resultUpload = files[0]
-          var image = new Image();
-          var reader = new FileReader();
-          var vm = this;
-
-          reader.onload = (e) => {
-            vm.image = e.target.result;
-          };
-          // reader.readAsDataURL(file);
-          reader.readAsDataURL(this.resultUpload);
-          // this.createImage(files[0]);
-          },
-          createImage(file) {
-            let data = new FormData();
-            data.append('name', this.name);
-            data.append('image', this.resultUpload);
-            data.append('latitude', this.currentLocation.latitude);
-            data.append('longitude', this.currentLocation.longitude);
-            axios.post('http://localhost:3000/upload', data)
-            .then((res)=> {
-              console.log('HASIL KIRIM',res);
-              // location.reload();
-            })
-            .catch((err) =>{
-              console.log(err);
-            });
-          },
-          removeImage(){
-            this.image = '';
-            this.name = '',
-            this.currentLocation = ''
-          }
-        },
-        created () {
-          navigator.geolocation.getCurrentPosition((position) => {
-            this.currentLocation = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude
-            };
-          });
-        }
-      })
-    </script>
+    <script src="assets/js/datavue.js" type="text/javascript"></script>
   </body>
 </html>
