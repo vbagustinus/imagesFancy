@@ -4,6 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Azhari & Ilham",
@@ -15,6 +17,7 @@
     "mongodb": "^2.2.33",
     "mongoose": "^4.13.2",
     "morgan": "^1.9.0",
-    "multer": "^1.3.0"
+    "multer": "^1.3.0",
+    "@google-cloud/storage": "^1.2.0"
   }
 }

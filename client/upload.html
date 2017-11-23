@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Upload Image</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Muli|Quicksand|Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/css/bulma.css" type="text/css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" type="text/css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+  </head>
+  <body>
+<div id="images">
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-8">
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-success">
+          <p class="title">Wide tile</p>
+          <p class="subtitle">Aligned with the right tile</p>
+          <div class="content">
+            <!-- Content -->
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-light">
+        <div class="content">
+          <form v-on:submit.prevent="createImage">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <div class="field">
+                      <input class="input" type='text' v-model="name" placeholder="Name images"><br><br>
+                      <div v-if="!image">
+                        <h2>Select an image</h2>
+                        <input class="button" name="file" id="file" type="file" @change="onFileChange">
+                      </div>
+                      <div v-else>
+                        <img :src="image" />
+                        <button class="button is-danger" @click="removeImage">Remove image</button>
+                      </div>
+                      <input class="button is-warning" type="submit" value="Upload Image" name="submit"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <span id = "status"></span>
+          </form>
+          </div>
+        </article>
+      </div>
+    </div>
+</div>
+</div>
+    <script>
+      new Vue(
+      {
+        el: '#images',
+        data: {
+          image: '',
+          resultUpload: null,
+          closeModal: null,
+          name: '',
+          imageName: ''
+        },
+        methods: {
+          onFileChange(e) {
+            // alert(JSON.stringify(e))
+          console.log(e.target.files)
+          var files = e.target.files || e.dataTransfer.files;
+
+          if (!files.length) {
+            return;
+          }
+          this.resultUpload = files[0]
+          var image = new Image();
+          var reader = new FileReader();
+          var vm = this;
+
+          reader.onload = (e) => {
+            vm.image = e.target.result;
+          };
+          // reader.readAsDataURL(file);
+          reader.readAsDataURL(this.resultUpload);
+          // this.createImage(files[0]);
+          },
+          createImage(file) {
+            let data = new FormData();
+            data.append('name', this.name);
+            data.append('image', this.resultUpload);
+            axios.post('http://localhost:3000/upload', data)
+            .then((res)=> {
+              console.log('HASIL KIRIM',res);
+              // location.reload();
+            })
+            .catch((err) =>{
+              console.log(err);
+            });
+          },
+          removeImage: function (e) {
+            this.image = '';
+          },
+          // saveImage(e){
+          //   console.log(this.dataImage);
+          //   let oo = e.target.files
+          //   let data = new FormData();
+          //   data.append('name', this.name);
+          //   data.append('file', this.image); //document.getElementById('file').files[0]
+          //   console.log('INI DATA', data);
+          //   axios.post('http://localhost:3000/upload', data,{headers: { 'Content-Type': 'multipart/form-data' } })
+          //   .then(response => {
+          //     console.log('HASIL',response);
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   })
+          // }
+        }
+      })
+    </script>
+  </body>
+</html>

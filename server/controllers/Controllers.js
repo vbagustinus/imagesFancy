@@ -2,15 +2,16 @@
 const mongoose = require('mongoose').connect('mongodb://localhost:27017/images');
 const ObjectId = require('mongodb').ObjectID;
 const Images = require('../models/Model');
-const multer = require('multer');
 
 let getAllImages = (req, res) => {
 
 }
 
-let createImage = (req, res) => {
-
+let createImage = (req, res, next) => {
+  console.log(req.body.name);
+  console.log('URL PENTING',req.file.cloudStoragePublicUrl);
 }
+
 
 let deleteImage = (req, res) => {
 

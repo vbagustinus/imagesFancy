@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const logger = require('morgan');
 const index = require('./routes/index');
 const path = require('path');
-const cors = require('cors')
+const cors = require('cors');
 
 app.use(cors())
 app.use(logger('dev'));
