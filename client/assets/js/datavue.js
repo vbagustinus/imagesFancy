@@ -13,6 +13,14 @@ Vue.use(VueGoogleMaps, {
   {
     el: '#images',
     data: {
+      active: false,
+      url : '',
+      facebook: '',
+      google: '',
+      linkedln: '',
+      reddit: '',
+      tumblr: '',
+      twitter: '',
       images: [],
       image: '',
       resultUpload: null,
@@ -21,13 +29,23 @@ Vue.use(VueGoogleMaps, {
       imageName: '',
       currentLocation : '',
       center: {
-        lat: 10.0,
-        lng: 10.0
+        lat: -6.260878,
+        lng: 106.781444
       },
       currentLocation :'',
       markers: []
     },
     methods: {
+      deleteImages(id){
+        axios.delete(`http://localhost:3000/${id}`)
+        .then(res=>{
+          console.log('HASIL HAPUS',res);
+          location.reload();
+        })
+        .catch(err=>{
+          console.log(err);
+        })
+      },
       onFileChange(e) {
         // alert(JSON.stringify(e))
       console.log(e.target.files)
@@ -67,36 +85,44 @@ Vue.use(VueGoogleMaps, {
         this.image = '';
         this.name = '',
         this.currentLocation = ''
+      },
+      say(url) {
+        this.url = url
+        console.log(url);
+        return this.active = true
       }
     },
     created () {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.currentLocation = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-      });
       axios.get('http://localhost:3000/')
       .then(response => {
-        console.log(response.data);
         response.data.map( image =>{
           this.markers.push({
             position : {
               lat : image.latitude,
               lng : image.longitude
             },
-            icon : {
-        			url: image.url,
-              origin: new google.maps.Point(96, 0),
-			        size: new google.maps.Size(96, 96), 
-        			scaledSize: new google.maps.Size(96, 96)
-        		}
+            icon : '',
+            url : image.url
           })
+          this.facebook= `http://www.facebook.com/sharer.php?u=${image.url}`;
+          this.google = `https://plus.google.com/share?url=${image.url}`;
+          this.linkedln = `http://www.linkedin.com/shareArticle?mini=true&amp;url=${image.url}`;
+          this.reddit = `http://reddit.com/submit?url=${image.url}`;
+          this.tumblr = `http://www.tumblr.com/share/link?url=${image.url}`;
+          this.twitter = `https://twitter.com/share?url=${image.url}`;
         })
+
         this.images.push(...response.data)
       })
       .catch(err=>{
         console.log(err);
       })
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.currentLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+      });
+      Vue.$gmapDefaultResizeBus.$emit('resize');
     }
   })

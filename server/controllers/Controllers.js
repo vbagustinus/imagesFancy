@@ -1,5 +1,5 @@
-// const mongoose = require('mongoose').connect('mongodb://vbagustinus:anakjalanan@smartshop-shard-00-00-hibsb.mongodb.net:27017,smartshop-shard-00-01-hibsb.mongodb.net:27017,smartshop-shard-00-02-hibsb.mongodb.net:27017/images?ssl=true&replicaSet=smartshop-shard-0&authSource=admin');
-const mongoose = require('mongoose').connect('mongodb://localhost:27017/images');
+const mongoose = require('mongoose').connect('mongodb://vbagustinus:anakjalanan@smartshop-shard-00-00-hibsb.mongodb.net:27017,smartshop-shard-00-01-hibsb.mongodb.net:27017,smartshop-shard-00-02-hibsb.mongodb.net:27017/images?ssl=true&replicaSet=smartshop-shard-0&authSource=admin');
+// const mongoose = require('mongoose').connect('mongodb://localhost:27017/images');
 const ObjectId = require('mongodb').ObjectID;
 const Images = require('../models/Model');
 
@@ -39,7 +39,20 @@ let createImage = (req, res, next) => {
 
 
 let deleteImage = (req, res) => {
-
+  // console.log("ID",req.params.id);
+  let id = {
+    _id : ObjectId(req.params.id)
+  }
+  Images.findByIdAndRemove(id)
+  .then(imagesRemove => {
+    res.send({
+      image: imagesRemove,
+      messages: 'Remove successed'
+    })
+  })
+  .catch(err=>{
+    res.status(500).send(err)
+  })
 }
 
 let updateImage = (req, res) => {
