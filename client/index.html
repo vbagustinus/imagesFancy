@@ -93,13 +93,7 @@
   </head>
   <body>
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/id_ID/sdk.js#xfbml=1&version=v2.11&appId=351979128600634';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+
     <div id="images">
       <!-- NAVIGATION BAR -->
       <div class="tabs is-centered is-boxed is-medium">
@@ -108,6 +102,11 @@
             <span class="title">images<i class="fa fa-ravelry fa-2x"></i> fancy</span>
           </li>
         </ul>
+        <div class="tabs is-right">
+          <ul>
+            <li><a href="upload.html" class="button is-warning subtitle">Home</a></li>
+          </ul>
+        </div>
       </div>
     <div class="columns is-centered">
         <div class="column is-8">
@@ -127,7 +126,7 @@
                 </span>
                 <span class="light"></span>
                 <br/>
-                <div class="fb-comments" data-href="#" data-width="200px" data-numposts="5"></div>
+
                 <!-- SHARE -->
                  <div class="dropdown">
                    <a class="button is-info" type="button" name="button">Share</a>
@@ -167,6 +166,8 @@
                    </div>
                  </div>
                  <a class="button is-primary" :href="url" :download="url">Download</a>
+                 <hr/>
+                 <div class="fb-comments" data-href="#" data-width="auto" data-numposts="5"></div>
               </div>
             </article>
           </div>
