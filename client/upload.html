@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>Upload Image</title>
-
     <link href="https://fonts.googleapis.com/css?family=Muli|Quicksand|Raleway" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/bulma.css" type="text/css">
@@ -11,25 +10,35 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
   </head>
   <body>
-<div id="images">
-  <div class="tile is-ancestor">
-    <div class="tile is-vertical is-7">
-      <div class="tile is-parent">
-        <article class="tile is-child notification is-dark">
-          <div class="content" v-for="img in images">
-            <img class="small" :src="img.url" />
-            <a class="button is-primary" :href="img.url" :download="img.url">Download</a>
-            <a class="button is-primary" @click="deleteImages(img._id)">Delete</a>
-          </div>
-        </article>
-      </div>
+    <!-- NAVIGATION -->
+    <div class="tabs is-centered is-boxed is-medium">
+      <ul>
+        <li>
+          <span class="title">upload<i class="fa fa-ravelry fa-2x"></i> fancy</span>
+        </li>
+      </ul>
     </div>
-    <div class="tile is-parent">
-      <article class="tile is-child notification is-light">
-        <div class="content">
+    <div id="images">
+      <div class="tile is-vertical is-10">
+        <div class="tile is-parent">
+          <article class="tile is-child notification is-dark">
+            <div class="content" v-for="img in images">
+              <figure class="snip1190">
+                <img :src="img.url" alt="Images"/>
+                <figcaption>
+                  <p>
+                    <a class="button is-info" @click="deleteImages(img._id)">Delete</a>
+                  </p>
+                </figcaption>
+              </figure>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-danger">
           <form v-on:submit.prevent="createImage">
             <div class="field is-horizontal">
               <div class="field-body">
@@ -64,17 +73,14 @@
                   </div>
                 </div>
               </div>
-            <span id = "status"></span>
           </form>
-          </div>
         </article>
+        </div>
       </div>
     </div>
-</div>
-</div>
-<script src="assets/js/vue-google-maps.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+    <script src="assets/js/vue-google-maps.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
     <script src="assets/js/datavue.js" type="text/javascript"></script>
   </body>
 </html>

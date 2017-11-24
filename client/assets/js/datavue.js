@@ -13,6 +13,14 @@ Vue.use(VueGoogleMaps, {
   {
     el: '#images',
     data: {
+      active: false,
+      url : '',
+      facebook: '',
+      google: '',
+      linkedln: '',
+      reddit: '',
+      tumblr: '',
+      twitter: '',
       images: [],
       image: '',
       resultUpload: null,
@@ -77,6 +85,11 @@ Vue.use(VueGoogleMaps, {
         this.image = '';
         this.name = '',
         this.currentLocation = ''
+      },
+      say(url) {
+        this.url = url
+        console.log(url);
+        return this.active = true
       }
     },
     created () {
@@ -87,9 +100,18 @@ Vue.use(VueGoogleMaps, {
             position : {
               lat : image.latitude,
               lng : image.longitude
-            }
+            },
+            icon : '',
+            url : image.url
           })
+          this.facebook= `http://www.facebook.com/sharer.php?u=${image.url}`;
+          this.google = `https://plus.google.com/share?url=${image.url}`;
+          this.linkedln = `http://www.linkedin.com/shareArticle?mini=true&amp;url=${image.url}`;
+          this.reddit = `http://reddit.com/submit?url=${image.url}`;
+          this.tumblr = `http://www.tumblr.com/share/link?url=${image.url}`;
+          this.twitter = `https://twitter.com/share?url=${image.url}`;
         })
+
         this.images.push(...response.data)
       })
       .catch(err=>{
