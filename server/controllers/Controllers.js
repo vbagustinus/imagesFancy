@@ -4,12 +4,37 @@ const ObjectId = require('mongodb').ObjectID;
 const Images = require('../models/Model');
 
 let getAllImages = (req, res) => {
-
+  Images.find()
+  .then(dataImages => {
+    console.log(dataImages);
+    res.send(dataImages)
+  })
+  .catch( err => {
+    console.log(err);
+  })
 }
 
 let createImage = (req, res, next) => {
-  console.log(req.body.name);
-  console.log('URL PENTING',req.file.cloudStoragePublicUrl);
+  // console.log(req.body.name);
+  // console.log('LOKASI',req.body.longitude);
+  // console.log('LOKASI',req.body.latitude);
+  // console.log('URL PENTING',req.file.cloudStoragePublicUrl);
+  let inputObj = Images({
+    name: req.body.name,
+    url: req.file.cloudStoragePublicUrl,
+    longitude: req.body.longitude,
+    latitude: req.body.latitude,
+  })
+   inputObj.save()
+   .then( data => {
+     res.send({
+       msg: 'Data Tersimpan',
+       data: data
+     })
+   })
+   .catch( err=> {
+     console.log(err);
+   })
 }
 
 

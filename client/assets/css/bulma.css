@@ -72,6 +72,7 @@ textarea {
 html {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+
 }
 
 * {
@@ -108,7 +109,7 @@ th {
 }
 
 html {
-  background-color: white;
+  background-color: #f6f1ed;
   font-size: 16px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -186,7 +187,8 @@ hr {
 
 img {
   height: auto;
-  max-width: 100%;
+  max-width: 300px;
+  /*border-radius: 75%;*/
 }
 
 input[type="checkbox"],
@@ -196,6 +198,7 @@ input[type="radio"] {
 
 small {
   font-size: 0.875em;
+  width: 100px;
 }
 
 span {
@@ -4523,12 +4526,12 @@ a.box:active {
 }
 
 .notification.is-light {
-  background-color: whitesmoke;
+  background-color: #b5a397 ;
   color: #363636;
 }
 
 .notification.is-dark {
-  background-color: #363636;
+  background-color: #30231d;
   color: whitesmoke;
 }
 
@@ -5136,7 +5139,7 @@ a.tag:hover {
 }
 
 .title {
-  color: #363636;
+  color: #f6f1ed;
   font-size: 2rem;
   font-weight: 600;
   line-height: 1.125;
@@ -5747,10 +5750,12 @@ a.dropdown-item.is-active {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
+    padding: 25px;
   }
 }
 
 .level-item {
+  padding: 20px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -7916,6 +7921,8 @@ label.panel-block:hover {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  background-color: #30231d;
+  padding: 15px;
 }
 
 .tabs.is-right ul {
@@ -10672,7 +10679,8 @@ label.panel-block:hover {
 }
 
 .footer {
-  background-color: #f6b75d;
+  background-color: #6a5750;
+  color: #f6f1ed;
   margin: 0;
   right: 0;
   bottom: 0;

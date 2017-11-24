@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="google-site-verification" content="qlIHK9zdW6gYT8NE0GCD3D_7M-NSbv0ofpO16ht9Xhg" />
-    <title>SmartShop</title>
+    <title>Fancy Images</title>
     <link href="https://fonts.googleapis.com/css?family=Muli|Quicksand|Raleway" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/bulma.css" type="text/css">
@@ -42,6 +42,13 @@
 
       });
     </script>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+    </style>
     <style media="screen">
       .small {
         width: 100px;
@@ -50,158 +57,24 @@
   </head>
   <body>
     <div id="images">
+      <p>{{ currentLocation }}</p>
       <!-- NAVIGATION BAR -->
-      <nav class="navbar warnaSendiri">
-      <div class="navbar-brand">
-        <div class="navbar-item" >
-          <i class="fa fa-opencart fa-2x" aria-hidden="true"> </i>
-           <strong> SmartShop</strong>
-          <!-- <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28"> -->
-        </div>
-        <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+      <div class="tabs is-centered is-boxed is-medium">
+        <ul>
+          <li>
+            <span class="title">images<i class="fa fa-ravelry fa-2x"></i> fancy</span>
+          </li>
+        </ul>
       </div>
-
-      <div id="navbarExampleTransparentExample" class="navbar-menu">
-        <div class="navbar-start">
-        </div>
-      </div>
-    </nav>
-
-    <div class="columns">
-        <div class="column is-3">
-          <aside class="menu">
-            <ul class="menu-list">
-              <li>
-                <a>List Images</a>
-                <ul>
-                  <li><a>Anonym</a></li>
-                  <li><a>Anonym</a></li>
-                  <li><a>Anonym</a></li>
-                </ul>
-              </li>
-            </ul>
-          </aside>
-        </div>
-        <div class="column is-9">
-          <!-- HEADER -->
-          <!-- Flickity HTML init -->
-          <section class="hero is-info is-large">
-                <div class="carousel" data-flickity='{ "autoPlay": true }'>
-                  <div class="carousel-cell">
-                    <img src="https://static.pexels.com/photos/581339/pexels-photo-581339.jpeg" alt="orange tree" />
-                  </div>
-                  <div class="carousel-cell">
-                    <img src="https://static.pexels.com/photos/1702/bow-tie-businessman-fashion-man.jpg" alt="One World Trade" />
-                  </div>
-                  <div class="carousel-cell">
-                    <img src="https://static.pexels.com/photos/581087/pexels-photo-581087.jpeg" alt="drizzle" />
-                  </div>
-                  <div class="carousel-cell">
-                    <img src="https://static.pexels.com/photos/297933/pexels-photo-297933.jpeg" alt="cat nose" />
-                  </div>
-                  <div class="carousel-cell">
-                    <img src="https://static.pexels.com/photos/9379/drinking-alley-fun-bowling-9379.jpg" alt="contrail" />
-                  </div>
-                  <div class="carousel-cell">
-                    <img src="https://static.pexels.com/photos/267202/pexels-photo-267202.jpeg" alt="golden hour" />
-                  </div>
-                </div>
-          </section>
-          <!-- MAIN CONTENT
-            List Images
-            List Item
-            Shopping Cart
-            Checkout -->
+    <div class="columns is-centered">
+        <div class="column is-10">
           <section class="section">
             <div class="container">
               <!-- Featured Products -->
-                <h1 class="title has-text-centered">World Class Products</h1>
-                <div class="row">
-                  <!-- Product 1 -->
-
-                    <div class="wadah col-xs-8 col-sm-4 col-md-2 col-md-1 flex-item" v-for="product in products">
-                      <a>
-                        <img class="image" v-bind:src="product.picture" alt="">
-                        <hr/>
-                        <h3 class="subtitle">{{ }}</h3>
-                        <p class="subtitle">
-                          <i class="fa fa-money" aria-hidden="true"></i> Rp {{  }}
-                        </p>
-                        <p class="title">
-                          <a v-on:click.prevent="addCart(product)" class="button is-white">
-                            <span class="icon">
-                              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            </span>
-                            <br/>
-                            <span class="text-is-white">Add to Cart</span>
-                          </a>
-                        </p>
-                        <div class="down">
-                          <i class="fa fa-question-circle dropbtn" aria-hidden="true"></i>
-                          <div class="dropdown-details">
-                            {{  }}
-                          </div>
-                        </div>
-                      </a>
-                    </div>
+                  <google-map :center="center" :zoom="7" style="width: 50%; height: 700px">
+                   <google-marker v-for="m in markers" :position="m.position" :icon="m.icon" :clickable="true"  @click="center=m.position"></google-marker>
+                  </google-map>
                 <!-- /.container -->
-                <!-- MODAL -->
-                  <div class="modal" id="modal">
-                    <div class="modal-background"></div>
-                    <div class="modal-card">
-                      <header class="modal-card-head">
-                        <p class="modal-card-title">List Carts</p>
-                        <button class="delete toggle-modal"></button>
-                      </header>
-                      <section class="modal-card-body">
-
-                        <!-- v-for="transaction in transactions"  -->
-                        <div v-if="transactions.length !== 0">
-                            <table class="table">
-                              <thead>
-                                <tr>
-                                  <td>No</td>
-                                  <th>Jumlah</th>
-                                  <th>Gambar</th>
-                                  <th>Barang</th>
-                                  <th>Harga</th>
-                                  <th>Hapus</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr v-for="(transaction, i) in transactions">
-                                  <td>{{ i + 1 }}</td>
-                                  <td>{{  }}</td>
-                                  <td><img class="small" v-bind:src="transaction.picture" alt="product"></td>
-                                  <th>{{  }}</th>
-                                  <td>{{  }}</td>
-                                  <td><i v-on:click.prevent="removeItem(transaction._id)" class="fa fa-trash-o" aria-hidden="true"></i></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                              <div class="level-right">
-                                <p class="level-item title">Total : {{ }}</p>
-                              </div>
-                        </div>
-
-                        <div v-else="transactions.length === 0">
-                          <p class="subtitle" href="">No transactions</p>
-                        </div>
-                        <!-- Content ... -->
-
-                      </section>
-                      <footer class="modal-card-foot">
-                        <a v-if="transactions.length !== 0" v-on:click="makePayment" class="toggle-modal button is-warning ">Payment</a>
-                        <a class="button toggle-modal">Cancel</a>
-                      </footer>
-                    </div>
-                  </div>
-                <!-- MODAL -->
-              </div>
             </div>
           </section>
           </div>
@@ -218,26 +91,12 @@
         </footer>
 
     </div>
-    <script type="text/javascript">
-      new Vue(
-      {
-        el: '#images',
-        data: {
-        },
-        methods: {
-          makePayment(){
-          },
-          addCart(product) {
-          },
-          removeItem(id){
-          }
-        },
-        created(){
-        }
-      })
-    </script>
-    <script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
+    <script src="node_modules/vue2-google-maps/dist/vue-google-maps.js"></script>
+    <script src="assets/js/datavue.js" type="text/javascript"></script>
+    <script>
     var modal = document.getElementById('modal');
     var elements = document.getElementsByClassName('toggle-modal');
     for (var i = 0; i < elements.length; i++) {
