@@ -4,7 +4,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
      <!-- <script src="https://unpkg.com/vue@2.5.8/dist/vue.js"></script> -->
-    <title>Simple icons</title>
+    <title>geolocation</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -25,10 +25,16 @@
     <div id="root">
       <p>{{ currentLocation }}</p>
        <google-map :center="center" :zoom="7" style="width: 50%; height: 700px">
-        <google-marker v-for="m in markers" :position="m.position"  :icon="m.icon" :clickable="true"  @click="center=m.position"></google-marker>
+        <google-marker v-for="m in markers" :position="m.position"  :icon="m.icon"  :clickable="true"  @click="say(m.url)" style="width: 20px; height: 10px"></google-marker>
        </google-map>
+       <ul v-if="active">
+         <img :src="url" alt="Smiley face" height="400px" width="400px">
+        </ul>
 
      </div>
+
+
+
    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
    <script src="node_modules/vue2-google-maps/dist/vue-google-maps.js"></script>
@@ -48,10 +54,16 @@
      document.addEventListener('DOMContentLoaded', function() {
        Vue.component('google-map', VueGoogleMaps.Map);
        Vue.component('google-marker', VueGoogleMaps.Marker);
+       Vue.component('my-component', {
+         template: '<div>A custom component!</div>'
+      })
+
 
        new Vue({
          el: '#root',
          data: {
+           active: false,
+           url : '',
            center: {
              lat: 10.0,
              lng: 10.0
@@ -62,13 +74,15 @@
                lat: 10.0,
                lng: 10.0
              },
-             icon : 'https://vignette.wikia.nocookie.net/simpsons/images/0/01/200px-Langdon_Alger.png/revision/latest?cb=20120815160236'
+             icon : '',
+             url : "https://static.shop.adidas.co.id/media/catalog/product/cache/2/small_image/250x/9df78eab33525d08d6e5fb8d27136e95/B/Y/BY3563_SL_eCom.jpg"
            }, {
              position: {
                lat: 11.3,
                lng: 60
              },
-             icon : 'https://jonathanturley.files.wordpress.com/2008/07/150px-mickey_mousesvg.png'
+             icon : '',
+             url : "https://jonathanturley.files.wordpress.com/2008/07/150px-mickey_mousesvg.png"
            }]
          },
           created () {
@@ -81,10 +95,18 @@
               console.log('POSISI TERAKHIR',typeof this.currentLocation.longitude);
               console.log(this.currentLocation.latitude);
             });
+          },
+          methods: {
+            say:  function  (url) {
+              this.url = url
+              console.log(url);
+              return this.active = true
+            }
           }
-
        });
      });
+
+
    </script>
  </script>
 
