@@ -21,13 +21,23 @@ Vue.use(VueGoogleMaps, {
       imageName: '',
       currentLocation : '',
       center: {
-        lat: 10.0,
-        lng: 10.0
+        lat: -6.260878,
+        lng: 106.781444
       },
       currentLocation :'',
       markers: []
     },
     methods: {
+      deleteImages(id){
+        axios.delete(`http://localhost:3000/${id}`)
+        .then(res=>{
+          console.log('HASIL HAPUS',res);
+          location.reload();
+        })
+        .catch(err=>{
+          console.log(err);
+        })
+      },
       onFileChange(e) {
         // alert(JSON.stringify(e))
       console.log(e.target.files)
@@ -70,27 +80,14 @@ Vue.use(VueGoogleMaps, {
       }
     },
     created () {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.currentLocation = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        };
-      });
       axios.get('http://localhost:3000/')
       .then(response => {
-        console.log(response.data);
         response.data.map( image =>{
           this.markers.push({
             position : {
               lat : image.latitude,
               lng : image.longitude
-            },
-            icon : {
-        			url: image.url,
-              origin: new google.maps.Point(96, 0),
-			        size: new google.maps.Size(96, 96), 
-        			scaledSize: new google.maps.Size(96, 96)
-        		}
+            }
           })
         })
         this.images.push(...response.data)
@@ -98,5 +95,12 @@ Vue.use(VueGoogleMaps, {
       .catch(err=>{
         console.log(err);
       })
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.currentLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        };
+      });
+      Vue.$gmapDefaultResizeBus.$emit('resize');
     }
   })

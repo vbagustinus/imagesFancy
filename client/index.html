@@ -15,6 +15,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="assets/js/modernizr.js"></script>
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function () {
 
@@ -57,7 +58,6 @@
   </head>
   <body>
     <div id="images">
-      <p>{{ currentLocation }}</p>
       <!-- NAVIGATION BAR -->
       <div class="tabs is-centered is-boxed is-medium">
         <ul>
@@ -71,8 +71,9 @@
           <section class="section">
             <div class="container">
               <!-- Featured Products -->
-                  <google-map :center="center" :zoom="7" style="width: 50%; height: 700px">
-                   <google-marker v-for="m in markers" :position="m.position" :icon="m.icon" :clickable="true"  @click="center=m.position"></google-marker>
+                  <google-map :center.sync="center" :zoom.sync="7" map-type-id="terrain" style="width: 50%; height: 700px">
+                   <google-marker v-for="m in markers"
+                   :position.sync="m.position" :icon.sync="m.icon" :clickable="true"  @click="center=m.position"></google-marker>
                   </google-map>
                 <!-- /.container -->
             </div>
@@ -91,10 +92,9 @@
         </footer>
 
     </div>
-
+    <script src="assets/js/vue-google-maps.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js"></script>
-    <script src="node_modules/vue2-google-maps/dist/vue-google-maps.js"></script>
     <script src="assets/js/datavue.js" type="text/javascript"></script>
     <script>
     var modal = document.getElementById('modal');
